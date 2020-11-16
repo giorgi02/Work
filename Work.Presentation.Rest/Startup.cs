@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Work.Core.Application.Interfaces;
 using Work.Infrastructure.Data;
 using Work.Infrastructure.Data.Implementation;
+using Work.Infrastructure.Services;
 
 namespace Work.Presentation.Rest
 {
@@ -31,13 +32,11 @@ namespace Work.Presentation.Rest
         {
             services.AddControllers();
 
-            services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IPositionRepository, PositionRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddDataLayer(Configuration);
+            services.AddServicesLayer(Configuration);
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
+
             services.AddSwaggerGen();
         }
 
